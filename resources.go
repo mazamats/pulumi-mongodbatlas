@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package xyz
+package mongodbatlas
 
 import (
 	"unicode"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/pulumi/pulumi-terraform-bridge/pkg/tfbridge"
+	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform/terraform"
+	"github.com/pulumi/pulumi-terraform/pkg/tfbridge"
 	"github.com/pulumi/pulumi/pkg/resource"
 	"github.com/pulumi/pulumi/pkg/tokens"
-	"github.com/terraform-providers/terraform-provider-xyz/xyz"
+	"github.com/terraform-providers/terraform-provider-mongodbatlas/mongodbatlas"
 )
 
 // all of the token components used below.
 const (
 	// packages:
-	mainPkg = "xyz"
+	mainPkg = "mongodbatlas"
 	// modules:
 	mainMod = "index" // the y module
 )
@@ -87,17 +87,17 @@ var managedByPulumi = &tfbridge.DefaultInfo{Value: "Managed by Pulumi"}
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := xyz.Provider().(*schema.Provider)
+	p := mongodbatlas.Provider().(*schema.Provider)
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
 		P:           p,
-		Name:        "xyz",
-		Description: "A Pulumi package for creating and managing xyz cloud resources.",
-		Keywords:    []string{"pulumi", "xyz"},
+		Name:        "mongodbatlas",
+		Description: "A Pulumi package for creating and managing mongodbatlas cloud resources.",
+		Keywords:    []string{"pulumi", "mongodbatlas"},
 		License:     "Apache-2.0",
 		Homepage:    "https://pulumi.io",
-		Repository:  "https://github.com/pulumi/pulumi-xyz",
+		Repository:  "https://github.com/pulumi/pulumi-mongodbatlas",
 		Config:      map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
@@ -108,8 +108,19 @@ func Provider() tfbridge.ProviderInfo {
 			// 	},
 			// },
 		},
-		PreConfigureCallback: preConfigureCallback,
-		Resources:            map[string]*tfbridge.ResourceInfo{
+		//PreConfigureCallback: preConfigureCallback,
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"mongodbatlas_cloud_provider_snapshot":             {Tok: makeResource(mainMod, "CloudProviderSnapshot")},
+			"mongodbatlas_cloud_provider_snapshot_restore_job": {Tok: makeResource(mainMod, "CloudProviderSnapshotRestoreJob")},
+			"mongodbatlas_cluster":                             {Tok: makeResource(mainMod, "Cluster")},
+			"mongodbatlas_database_user":                       {Tok: makeResource(mainMod, "DatabaseUser")},
+			"mongodbatlas_encryption_at_rest":                  {Tok: makeResource(mainMod, "EncryptionAtRest")},
+			"mongodbatlas_network_container":                   {Tok: makeResource(mainMod, "NetworkContainer")},
+			"mongodbatlas_network_peering":                     {Tok: makeResource(mainMod, "NetworkPeering")},
+			"mongodbatlas_private_ip_mode":                     {Tok: makeResource(mainMod, "PrivateIpMode")},
+			"mongodbatlas_project":                             {Tok: makeResource(mainMod, "Project")},
+			"mongodbatlas_project_ip_whitelist":                {Tok: makeResource(mainMod, "ProjectIpWhitelist")},
+
 			// Map each resource in the Terraform provider to a Pulumi type. Two examples
 			// are below - the single line form is the common case. The multi-line form is
 			// needed only if you wish to override types or other default options.

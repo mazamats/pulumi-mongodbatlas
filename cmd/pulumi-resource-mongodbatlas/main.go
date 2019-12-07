@@ -15,13 +15,13 @@
 package main
 
 import (
-	"github.com/pulumi/pulumi-terraform-bridge/pkg/tfbridge"
+	"github.com/pulumi/pulumi-terraform/pkg/tfbridge"
 
-	xyz "github.com/pulumi/pulumi-xyz"
-	"github.com/pulumi/pulumi-xyz/pkg/version"
+	mongodbatlas "github.com/pulumi/pulumi-mongodbatlas"
+	"github.com/pulumi/pulumi-mongodbatlas/pkg/version"
 )
 
 func main() {
 	// Modify the path to point to the new provider
-	tfbridge.Main("xyz", version.Version, xyz.Provider())
+	tfbridge.Main("mongodbatlas", version.Version, mongodbatlas.Provider())
 }
